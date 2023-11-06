@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Simple To-Do List</title>
+</head>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #806060;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin-top: 200px;
+}
+
+.task-form {
+    margin-bottom: 20px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.task-form input, .task-form button {
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #888;
+  
+}
+
+</style>
+<body>
+    <div class="task-form">
+        <input type="text" id="task" placeholder="Enter task" style="border-radius: 10px; width:300px; height:30px;">
+        <button onclick="addTask()" style="border-radius: 10px; width:100px; height:30px;">Add Task</button>
+    </div>
+    <div class="task-list">
+        <h2>Pending Tasks</h2>
+        <ul id="pendingTasks"></ul>
+        <h2>Completed Tasks</h2>
+        <ul id="completedTasks"></ul>
+    </div>
+    <script>
+      const taskInput = document.getElementById("task");
+const pendingTasksList = document.getElementById("pendingTasks");
+const completedTasksList = document.getElementById("completedTasks");
+
+function addTask() {
+    const taskText = taskInput.value.trim();
+    if (taskText === "") return;
+
+    const taskItem = document.createElement("li");
+    taskItem.textContent = taskText;
+
+    const completeButton = document.createElement("button");
+    completeButton.textContent = "Complete";
+    completeButton.onclick = function() {
+        taskItem.classList.toggle("completed");
+        if (taskItem.classList.contains("completed")) {
+            completedTasksList.appendChild(taskItem);
+            completeButton.textContent = "Undo";
+        } else {
+            pendingTasksList.appendChild(taskItem);
+            completeButton.textContent = "Complete";
+        }
+    };
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.onclick = function() {
+        taskItem.remove();
+    };
+
+    taskItem.appendChild(completeButton);
+    taskItem.appendChild(deleteButton);
+    pendingTasksList.appendChild(taskItem);
+
+    taskInput.value = "";
+}
+
+    </script>
+</body>
+</html>
